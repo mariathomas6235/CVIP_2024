@@ -1,2 +1,3 @@
 # CVIP_2024
-CVIP 2024
+Capsule Vision 2024 Challenge: Multi-Class Abnormality Classification for Video Capsule Endoscopy(VCE), organised by Research Center for Medical Image Analysis and Artificial Intelligence (MIAAI), Department of Medicine, Danube Private University, Krems, Austria, and Medical Imaging and 
+Signal Analysis Hub (MISAHUB) in collaboration with the 9th International Conference on Computer Vision & Image Processing (CVIP 2024) being organized by the Indian Institute of Information Technology, Design and Manufacturing (IIITDM) Kancheepuram, Chennai, India. The challenge's objective was to develop AI/ML-based models for the classification of abnormalities captured in VCE video frames.
