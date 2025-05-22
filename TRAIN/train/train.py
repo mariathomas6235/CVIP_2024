@@ -1,10 +1,9 @@
 import os
 import torch
 import matplotlib.pyplot as plt
-from utils.export_results import save_predictions_to_excel  # ✅ Correct
+from utils.export_results import save_predictions_to_excel  
 
-from utils.export_results import save_predictions_to_excel  # ✅ Correct
-
+from utils.export_results import save_predictions_to_excel  
 from utils.metrics import (
     plot_confusion_matrix,
     plot_roc_curve,
@@ -30,7 +29,7 @@ def train_and_validate_model(
     epoch_metrics = []
 
     for epoch in range(num_epochs):
-        # --- Training ---
+      
         model.train()
         running_loss = correct = total = 0
         for imgs, labels in train_loader:
@@ -50,7 +49,7 @@ def train_and_validate_model(
         train_losses.append(train_loss)
         train_accs.append(train_acc)
 
-        # --- Validation ---
+       
         model.eval()
         running_vloss = vcorrect = vtotal = 0
         all_labels, all_preds, all_probs = [], [], []
@@ -87,13 +86,12 @@ def train_and_validate_model(
             'Val Acc (%)': val_acc,
         })
 
-    # --- Post-training exports ---
-    # 1) predictions & probs
+  
     save_predictions_to_excel(
         all_preds, all_labels, all_probs,
         class_names, os.path.join(output_folder, 'predictions.xlsx')
     )
-    # 2) plots
+    
     plot_confusion_matrix(all_labels, all_preds, class_names,
                           normalize=True,
                           output_path=os.path.join(output_folder, 'cm.png'))
@@ -102,24 +100,24 @@ def train_and_validate_model(
     plot_roc_curves_by_class(all_labels, all_probs, len(class_names),
                              class_names,
                              output_path=os.path.join(output_folder, 'roc_by_class.png'))
-    # 3) epoch metrics table & accuracy/loss curves
+    
     save_epoch_metrics_to_excel(epoch_metrics,
                                 os.path.join(output_folder, 'epoch_metrics.xlsx'))
 
-    # accuracy curve
+    
     plt.figure()
     plt.plot(range(1, num_epochs+1), train_accs, label='Train')
     plt.plot(range(1, num_epochs+1), val_accs,   label='Val')
     plt.xlabel('Epoch'); plt.ylabel('Accuracy (%)'); plt.legend()
     plt.savefig(os.path.join(output_folder, 'acc_curve.png')); plt.close()
 
-    # loss curve
+  
     plt.figure()
     plt.plot(range(1, num_epochs+1), train_losses, label='Train')
     plt.plot(range(1, num_epochs+1), val_losses,   label='Val')
     plt.xlabel('Epoch'); plt.ylabel('Loss'); plt.legend()
     plt.savefig(os.path.join(output_folder, 'loss_curve.png')); plt.close()
 
-    # finally save model weights
+  
     torch.save(model.state_dict(), os.path.join(output_folder, 'model.pth'))
     print(f"All outputs saved to `{output_folder}`.")
